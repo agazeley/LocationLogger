@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "navigated-login",
-    "description": "This project is really great.",
-    "slug": "navigated-login",
+    "name": "location-logger",
+    "description": "An app that logs your location and saves to a database.",
+    "slug": "location-logger",
     "privacy": "public",
     "sdkVersion": "25.0.0",
     "platforms": ["ios", "android"],

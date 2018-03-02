@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'reac
 
 export default class Register extends React.Component{
     static navigationOptions = {
-        title: 'Register',
+        header: null,
     }
     
     constructor(props){

@@ -6,8 +6,15 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 
 export default class Authentication extends React.Component {
     static navigationOptions = {
-        title: 'Login',
+        header: null,
       };
+    
+    static propTypes = {
+        route: PropTypes.shape({
+          title: PropTypes.string.isRequired,
+        }),
+        navigator: PropTypes.object.isRequired,
+    };
     
     constructor(props){
         super(props)
@@ -19,7 +26,6 @@ export default class Authentication extends React.Component {
     }
    
     render(){
-        const { navigate } = this.props.navigation;
         return (
             <ViewContainer>
                 <StatusbarBackground />
@@ -51,18 +57,12 @@ export default class Authentication extends React.Component {
                         />
                     </View>
                     <View style={styles.login}>
-                        <TouchableOpacity style={styles.loginButton} 
-                            onPress={ () =>
-                                navigate('LoggedIn',{ name: 'LoggedIn' })
-                                }>
+                        <TouchableOpacity style={styles.loginButton}>
                             <Text style={styles.loginText}>LOG IN</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.register}>
-                        <TouchableOpacity style={styles.registerButton} 
-                            onPress={ () =>
-                                navigate('Register',{ name: 'Register'})
-                                }>
+                        <TouchableOpacity style={styles.registerButton}>
                             <Text style={styles.registerText}>REGISTER</Text>
                         </TouchableOpacity>
                     </View>
