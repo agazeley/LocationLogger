@@ -1,21 +1,69 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ViewContainer from '../components/ViewContainer.js'
-import StatusbarBackground from '../components/StatusbarBackground.js'
+import React from 'react';
+import Expo, { SQLite } from 'expo';
+import ViewContainer from '../components/ViewContainer.js';
+import StatusbarBackground from '../components/StatusbarBackground.js';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+
+const db = SQLite.openDatabase('loc_db.db');
 
 export default class Authentication extends React.Component {
     static navigationOptions = {
-        title: 'Login',
+        //title: 'Login',
       };
-    
+      
+      // takes returned rows and checks for authentication conditions
+      _checkAuthenticated(_array){
+        const { navigate } = this.props.navigation;
+        
+        console.log(_array.length);
+        
+        if(_array.length == '1'){
+            this.setState({authenticated : true});
+        }
+
+        if(this.state.authenticated || this.state.dev){
+            console.log(this.state.authenticated);
+            navigate('LoggedIn',{ name: 'LoggedIn' });
+        }
+        else{
+            alert('Username or password are incorrect');
+        }
+      }
+      // Only queries the DB and runs authentication check
+      _login(){
+        const { navigate } = this.props.navigation;        
+        db.transaction(
+            tx => {
+                tx.executeSql('select * from users where email = ? and password = ?', [this.state.email, this.state.password], (_, { rows: { _array } }) => 
+                this._checkAuthenticated(_array)
+                );
+              },
+            null,
+            this.update
+        );   
+    }
+
+    componentDidMount() {
+        db.transaction(tx => {
+          tx.executeSql(
+            'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
+          );
+          tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
+          this.setState({ users: _array })
+              );
+        });
+
+    }
+
     constructor(props){
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            users: null,
+            authenticated: false,
+            dev: false,
         }
-        
     }
    
     render(){
@@ -23,9 +71,6 @@ export default class Authentication extends React.Component {
         return (
             <ViewContainer>
                 <StatusbarBackground />
-                <View style={styles.logoReg}>
-                    <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
-                </View>
                 <ViewContainer>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput} 
@@ -52,9 +97,7 @@ export default class Authentication extends React.Component {
                     </View>
                     <View style={styles.login}>
                         <TouchableOpacity style={styles.loginButton} 
-                            onPress={ () =>
-                                navigate('LoggedIn',{ name: 'LoggedIn' })
-                                }>
+                            onPress={ this._login.bind(this) }>
                             <Text style={styles.loginText}>LOG IN</Text>
                         </TouchableOpacity>
                     </View>
@@ -67,7 +110,9 @@ export default class Authentication extends React.Component {
                         </TouchableOpacity>
                     </View>
                 </ViewContainer>
-                
+                <View style={styles.logoReg}>
+                    <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
+                </View>
             </ViewContainer>
         )
     }

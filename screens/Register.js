@@ -1,13 +1,63 @@
-import React from 'react'
-import ViewContainer from '../components/ViewContainer.js'
-import StatusbarBackground from '../components/StatusbarBackground.js'
+import React from 'react';
+import Expo, { SQLite } from 'expo';
+import ViewContainer from '../components/ViewContainer.js';
+import StatusbarBackground from '../components/StatusbarBackground.js';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
+
+const db = SQLite.openDatabase('loc_db.db');
 
 export default class Register extends React.Component{
     static navigationOptions = {
-        title: 'Register',
+        //title: 'Register',
     }
-    
+
+    componentDidMount(){
+        db.transaction(
+            tx => {
+                tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
+                this.setState({ users: _array })
+                );
+            },
+            null,
+            this.update
+        );
+    }
+
+    _add(fName,lName,email,password){
+        db.transaction(
+            tx => {
+              tx.executeSql('insert into users (fName, lName, password, email) values (?, ?, ?, ?)', [fName,lName,password,email]);
+              tx.executeSql('select * from users', [], (_, { rows: { _array } }) => this.setState({ users: _array })
+              );
+            },
+            null,
+            this.update
+          );
+          console.log(this.state.users)
+    }
+
+    _submit(){
+        // alert("PW: " + this.state.password + " " + this.state.confirmPassword);
+        if(this.state.password == this.state.confirmPassword){
+            if(this.state.firstName != "" && this.state.lastName != "" && this.state.email != "" && this.state.password != ""){
+                try{
+                    this._add(this.state.firstName,this.state.lastName,this.state.email,this.state.password);
+                }
+                catch(e){
+                    alert(e);
+                }
+            }
+            else{
+                alert("Please fill out the whole form");
+            }
+        }
+    }
+
+    update = () => {
+        this.todo && this.todo.update();
+        this.done && this.done.update();
+      };
+
     constructor(props){
         super(props)
         this.state = {
@@ -15,7 +65,8 @@ export default class Register extends React.Component{
             lastName: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            users: null,
         }
     }
     
@@ -23,14 +74,10 @@ export default class Register extends React.Component{
         return (
             <ViewContainer>
                 <StatusbarBackground />
-                <View style={styles.joinReg}>
-                    <Image source={require('../assets/images/join.jpg')} style={styles.join}/>
-                </View>
                 <ViewContainer>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput} 
                                     onChangeText={(text) => this.setState({firstName: text})}
-                                    value={this.state.email}
                                     placeholder="FIRST NAME"
                                     placeholderTextColor="white"
                                     autoCorrect={false}
@@ -40,7 +87,7 @@ export default class Register extends React.Component{
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput} 
                                     onChangeText={(text) => this.setState({lastName: text})}
-                                    value={this.state.email}
+                                    value={this.state.lastName}
                                     placeholder="LAST NAME"
                                     placeholderTextColor="white"
                                     autoCorrect={false}
@@ -70,8 +117,8 @@ export default class Register extends React.Component{
                     </View>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput}
-                                onChangeText={(text) => this.setState({confirmpassword: text})}
-                                value={this.state.password}
+                                onChangeText={(text) => this.setState({confirmPassword: text})}
+                                value={this.state.confirmPassword}
                                 placeholder="CONFIRM PASSWORD"
                                 placeholderTextColor="white"
                                 secureTextEntry={true}
@@ -81,10 +128,14 @@ export default class Register extends React.Component{
                     </View>
                     <View style={styles.submit}>
                         <TouchableOpacity style={styles.submitButton}>
-                            <Text style={styles.submitText}>SUBMIT</Text>
+                            <Text style={styles.submitText} onPress={ this._submit.bind(this) }>
+                            SUBMIT</Text>
                         </TouchableOpacity>
                     </View>
                 </ViewContainer>
+                <View style={styles.joinReg}>
+                    <Image source={require('../assets/images/join.jpg')} style={styles.join}/>
+                </View>
             </ViewContainer>
         )
     }
@@ -104,7 +155,7 @@ const styles = StyleSheet.create({
         marginTop: 7.5,
         textAlign: 'left',
         paddingLeft: 0,
-        color: 'white',
+        color: 'red',
         fontSize: 12
     },
     join:{
