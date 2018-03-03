@@ -70,7 +70,6 @@ export default class Authentication extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <ViewContainer>
-                <StatusbarBackground />
                 <ViewContainer>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput} 
@@ -107,6 +106,15 @@ export default class Authentication extends React.Component {
                                 navigate('Register',{ name: 'Register'})
                                 }>
                             <Text style={styles.registerText}>REGISTER</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.register}>
+                        <TouchableOpacity style={styles.registerButton} 
+                            onPress={ () =>
+                                // View arguement is page to navigate to, second are parameters for that navigation
+                                navigate('ViewUsers',{ name: 'ViewUsers'})
+                                }>
+                            <Text style={styles.registerText}>VIEW USERS</Text>
                         </TouchableOpacity>
                     </View>
                 </ViewContainer>

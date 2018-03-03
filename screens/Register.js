@@ -48,8 +48,13 @@ export default class Register extends React.Component{
                 }
             }
             else{
-                alert("Please fill out the whole form");
+                alert("Please fill out the whole form")
             }
+        }
+        else{
+            alert("Passwords do not match. Please try again");
+            this.state.password = "";
+            this.state.confirmpassword = "";
         }
     }
 
@@ -77,53 +82,59 @@ export default class Register extends React.Component{
                 <ViewContainer>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput} 
-                                    onChangeText={(text) => this.setState({firstName: text})}
-                                    placeholder="FIRST NAME"
-                                    placeholderTextColor="white"
-                                    autoCorrect={false}
-                                    returnKeyType="next"                        
+                                onChangeText={(text) => this.setState({firstName: text})}
+                                value={this.state.firstName}
+                                placeholder="FIRST NAME"
+                                color="white"
+                                placeholderTextColor="white"
+                                autoCorrect={false}
+                                returnKeyType="next"                        
+                            />
+                    </View>
+                    <View style={styles.textInputView}>
+                    <TextInput style = {styles.textInput} 
+                            onChangeText={(text) => this.setState({lastName: text})}
+                            value={this.state.lastName}
+                            placeholder="LAST NAME"
+                            color="white"
+                            placeholderTextColor="white"
+                            autoCorrect={false}
+                            returnKeyType="next"                        
                         />
                     </View>
                     <View style={styles.textInputView}>
-                        <TextInput style = {styles.textInput} 
-                                    onChangeText={(text) => this.setState({lastName: text})}
-                                    value={this.state.lastName}
-                                    placeholder="LAST NAME"
-                                    placeholderTextColor="white"
-                                    autoCorrect={false}
-                                    returnKeyType="next"                        
-                        />
-                    </View>
-                    <View style={styles.textInputView}>
-                        <TextInput style = {styles.textInput} 
-                                    onChangeText={(text) => this.setState({email: text})}
-                                    value={this.state.email}
-                                    placeholder="EMAIL"
-                                    placeholderTextColor="white"
-                                    autoCorrect={false}
-                                    returnKeyType="next"                        
+                    <TextInput style = {styles.textInput} 
+                            onChangeText={(text) => this.setState({email: text})}
+                            value={this.state.email}
+                            placeholder="EMAIL"
+                            color="white"
+                            placeholderTextColor="white"
+                            autoCorrect={false}
+                            returnKeyType="next"                        
                         />
                     </View>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput}
-                                onChangeText={(text) => this.setState({password: text})}
-                                value={this.state.password}
-                                placeholder="PASSWORD"
-                                placeholderTextColor="white"
-                                secureTextEntry={true}
-                                autoCorrect={false}
-                                returnKeyType="next"
+                            onChangeText={(text) => this.setState({password: text})}
+                            value={this.state.password}
+                            placeholder="PASSWORD"
+                            color="white"
+                            placeholderTextColor="white"
+                            secureTextEntry={true}
+                            autoCorrect={false}
+                            returnKeyType="next"
                         />
                     </View>
                     <View style={styles.textInputView}>
                         <TextInput style = {styles.textInput}
-                                onChangeText={(text) => this.setState({confirmPassword: text})}
-                                value={this.state.confirmPassword}
-                                placeholder="CONFIRM PASSWORD"
-                                placeholderTextColor="white"
-                                secureTextEntry={true}
-                                autoCorrect={false}
-                                returnKeyType="go"
+                            onChangeText={(text) => this.setState({confirmPassword: text})}
+                            value={this.state.confirmPassword}
+                            placeholder="CONFIRM PASSWORD"
+                            color="white"
+                            placeholderTextColor="white"
+                            secureTextEntry={true}
+                            autoCorrect={false}
+                            returnKeyType="go"
                         />
                     </View>
                     <View style={styles.submit}>
@@ -154,8 +165,8 @@ const styles = StyleSheet.create({
     textInput : {
         marginTop: 7.5,
         textAlign: 'left',
-        paddingLeft: 0,
-        color: 'red',
+        paddingLeft: 20,
+        color: 'white',
         fontSize: 12
     },
     join:{
@@ -167,12 +178,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 160,
         marginBottom: 100,
-    },
-    textInput : {
-        height: 30,
-        marginLeft:10,
-        padding: 20,
-        fontSize: 12
     },
     submit: {
         paddingTop: 10,

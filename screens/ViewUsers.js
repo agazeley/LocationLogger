@@ -1,9 +1,10 @@
 import Expo, { SQLite } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-
+import ViewContainer from '../components/ViewContainer';
 const db = SQLite.openDatabase('loc_db.db');
 
+// Class that holds a list of items pulled from db. Currently set up for users. Need to take time to implement generic class for this
 class Items extends React.Component {
   constructor(props){
       super(props)
@@ -46,9 +47,6 @@ class Items extends React.Component {
     return (
       
       <View style={{ margin: 5 }}>
-        <View>
-            <Text style={styles.title}>USERS</Text>
-        </View>
         {items.map(({ id, fName, lName,email,password }) => (
           <TouchableOpacity
             key={id}
@@ -77,6 +75,10 @@ class Items extends React.Component {
 }
 
 export default class ViewUsers extends React.Component {
+  static navigationOptions = { 
+    title : "View Users",
+  }
+
   componentDidMount() {
     db.transaction(tx => {
       tx.executeSql(
@@ -87,11 +89,11 @@ export default class ViewUsers extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ViewContainer style={styles.container}>
         <View style={{ flex: 1, backgroundColor: 'gray' }}>
           <Items/>
         </View>
-      </View>
+      </ViewContainer>
     );
   }
 }
@@ -99,7 +101,6 @@ export default class ViewUsers extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: Expo.Constants.statusBarHeight,
   },
   title: {
