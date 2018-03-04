@@ -14,6 +14,9 @@ export default class Register extends React.Component{
     componentDidMount(){
         db.transaction(
             tx => {
+                tx.executeSql(
+                    'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
+                  );
                 tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
                 this.setState({ users: _array })
                 );
@@ -24,6 +27,7 @@ export default class Register extends React.Component{
     }
 
     _add(fName,lName,email,password){
+        console.log(fName + lName + email)
         db.transaction(
             tx => {
               tx.executeSql('insert into users (fName, lName, password, email) values (?, ?, ?, ?)', [fName,lName,password,email]);
@@ -37,7 +41,7 @@ export default class Register extends React.Component{
     }
 
     _submit(){
-        // alert("PW: " + this.state.password + " " + this.state.confirmPassword);
+        // console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.password);
         if(this.state.password == this.state.confirmPassword){
             if(this.state.firstName != "" && this.state.lastName != "" && this.state.email != "" && this.state.password != ""){
                 try{

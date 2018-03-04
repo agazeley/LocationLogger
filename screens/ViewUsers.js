@@ -22,7 +22,6 @@ class Items extends React.Component {
         null,
         this.update
       );
-      console.log(this);
     }
   
 
@@ -86,10 +85,45 @@ export default class ViewUsers extends React.Component {
       );
     });
 }
+  constructor(props){
+    super(props)
+    
+    this.state = {
+      items : null,
+    };
+  }
+
+  _flush(){
+    console.log("FLUSHING DB");
+
+    db.transaction(
+      tx => {
+        tx.executeSql(
+          'drop table if exists users;'
+        );
+        tx.executeSql(
+          'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
+        );
+        tx.executeSql(`select * from users;`,
+        (_, { rows: { _array } }) => 
+          this.setState({ items: _array })
+        );
+      },
+      null,
+      this.update
+    );
+    console.log(this.state.items);
+  }
 
   render() {
     return (
       <ViewContainer style={styles.container}>
+        <View style={styles.flush}>
+          <TouchableOpacity style={styles.flushButton} 
+            onPress={ this._flush.bind(this) }>
+            <Text style={styles.flushText}>FLUSH</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{ flex: 1, backgroundColor: 'gray' }}>
           <Items/>
         </View>
@@ -105,5 +139,22 @@ const styles = StyleSheet.create({
   },
   title: {
       alignSelf : 'center',
-  }
+  },
+  flush: {
+    paddingTop: 10,
+    marginLeft:40,
+    marginRight:40,
+  },
+  flushButton: {
+      borderWidth: 1 ,
+      height: 30,
+      backgroundColor: '#999999',
+      justifyContent: 'center',
+      borderRadius: 40,
+      overflow: 'hidden',
+      alignItems: 'center',
+  },
+  flushText: {
+      color: 'white'
+  },
 });
