@@ -20,10 +20,10 @@ export default class Authentication extends React.Component {
         if(_array.length == '1'){
             this.setState({authenticated : true});
         }
-
+        
         if(this.state.authenticated || this.state.dev){
-            console.log(this.state.authenticated);
-            navigate('LoggedIn',{ name: 'LoggedIn' });
+            console.log("User id : " + _array[0].id + " logged in.");
+            navigate('Profile',{ fName: _array[0].fName, lName: _array[0].lName, id: _array[0].id, email: _array[0].email});
         }
         else{
             alert('Username or password are incorrect');

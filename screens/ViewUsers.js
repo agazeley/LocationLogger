@@ -104,15 +104,10 @@ export default class ViewUsers extends React.Component {
         tx.executeSql(
           'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
         );
-        tx.executeSql(`select * from users;`,
-        (_, { rows: { _array } }) => 
-          this.setState({ items: _array })
-        );
       },
       null,
       this.update
     );
-    console.log(this.state.items);
   }
 
   render() {

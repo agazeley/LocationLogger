@@ -2,7 +2,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import Login from '../screens/Authentication';
 import Register from '../screens/Register';
-import LoggedIn from '../screens/LoggedIn';
+import Profile from '../screens/Profile';
 import ViewUsers from '../screens/ViewUsers';
 
 const RootStackNavigator = StackNavigator(
@@ -13,8 +13,8 @@ const RootStackNavigator = StackNavigator(
         Register: {
             screen: Register
         },
-        LoggedIn: {
-            screen: LoggedIn
+        Profile: {
+            screen: Profile
         },
         ViewUsers: {
             screen : ViewUsers

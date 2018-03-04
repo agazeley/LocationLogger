@@ -41,7 +41,7 @@ export default class Register extends React.Component{
     }
 
     _submit(){
-        // console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.password);
+            // console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.password);
         if(this.state.password == this.state.confirmPassword){
             if(this.state.firstName != "" && this.state.lastName != "" && this.state.email != "" && this.state.password != ""){
                 try{
@@ -65,8 +65,9 @@ export default class Register extends React.Component{
     update = () => {
         this.todo && this.todo.update();
         this.done && this.done.update();
-      };
+    }
 
+    
     constructor(props){
         super(props)
         this.state = {
