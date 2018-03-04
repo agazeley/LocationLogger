@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import ViewContainer from '../components/ViewContainer';
+import Geolocation from '../components/Geolocation';
 
 export default class Profile extends React.Component{
 
@@ -10,8 +11,10 @@ export default class Profile extends React.Component{
         params = this.props.navigation.state.params;
 
         this.state = {
-            user : params,
-        }
+            user: params,
+            initialPosition: 'unknown',
+            lastPosition: 'unknown'
+           }
     }
 
     render() {
@@ -21,8 +24,7 @@ export default class Profile extends React.Component{
                     <Text style={styles.text}>{"Welcome to your profile!"}</Text>
                     <Text style={styles.text}>{this.state.user.fName + " " + this.state.user.lName}</Text>
                     <Text style={styles.text}>{"\n\n"}</Text>
-                    <Text style={styles.text}>{"Lower"}</Text>
-
+                    <Geolocation />
                 </View>
             </ViewContainer>
         );
