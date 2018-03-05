@@ -3,6 +3,7 @@ import Expo, { SQLite } from 'expo';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusbarBackground from '../components/StatusbarBackground.js';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import Geoloc from '../components/Geoloc';
 
 const db = SQLite.openDatabase('loc_db.db');
 
@@ -63,6 +64,8 @@ export default class Authentication extends React.Component {
             users: null,
             authenticated: false,
             dev: false,
+            latitude: 1,
+            longitude: 0
         }
     }
    
@@ -116,16 +119,22 @@ export default class Authentication extends React.Component {
                         <Text style={styles.registerText}>VIEW USERS</Text>
                     </TouchableOpacity>
                 </View>
-            
-            <View style={styles.logoReg}>
+                <View style={styles.coordinates}>
+                    <Geoloc />
+                </View>
+                <View style={styles.logoReg}>
                 <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
-            </View>
+                </View>
             </ViewContainer>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
+    coordinates:{
+        height: 100,
+        backgroundColor: 'black',
+    },
     logo:{
         height: 200,
         width: 200,
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     },
     logoReg: {
         alignItems: 'center',
-        marginTop: 160,
+        marginTop: 90,
         marginBottom: 100,
     },
     textInputView : {
