@@ -3,8 +3,10 @@ import Expo, { SQLite } from 'expo';
 import ViewContainer from '../components/ViewContainer.js';
 import StatusbarBackground from '../components/StatusbarBackground.js';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity } from 'react-native';
+import Database from '../components/Database'
 
-const db = SQLite.openDatabase('loc_db.db');
+//replaced by the Database import
+//const db = SQLite.openDatabase('loc_db.db');
 
 export default class Register extends React.Component{
     static navigationOptions = {
@@ -12,13 +14,13 @@ export default class Register extends React.Component{
     }
 
     componentDidMount(){
-        db.transaction(
+        Database.transaction(
             tx => {
                 tx.executeSql(
                     'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
                   );
                 tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
-                this.setState({ users: _array })
+                    this.setState({ users: _array })
                 );
             },
             null,
@@ -27,21 +29,22 @@ export default class Register extends React.Component{
     }
 
     _add(fName,lName,email,password){
-        console.log(fName + lName + email)
-        db.transaction(
+        //console.log(fName + lName + email)
+        Database.transaction(
             tx => {
               tx.executeSql('insert into users (fName, lName, password, email) values (?, ?, ?, ?)', [fName,lName,password,email]);
-              tx.executeSql('select * from users', [], (_, { rows: { _array } }) => this.setState({ users: _array })
-              );
+              //select * from users, empty param list, and a success function that gets the ResultSet.rows._array item and stores it in state
+              tx.executeSql('select * from users', [], (_, { rows: { _array } }) => this.setState({ users: _array }));
+              //tx.executeSql('select * from users', [], (_, results)=> this.setState({users:results.rows._array}));
             },
             null,
             this.update
           );
-          console.log(this.state.users)
+          console.log(JSON.stringify(this.state.users));
     }
 
     _submit(){
-            // console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.password);
+        console.log(this.state.firstName + this.state.lastName + this.state.email + this.state.password);
         if(this.state.password == this.state.confirmPassword){
             if(this.state.firstName != "" && this.state.lastName != "" && this.state.email != "" && this.state.password != ""){
                 try{
@@ -125,7 +128,7 @@ export default class Register extends React.Component{
                             placeholder="PASSWORD"
                             //color="white"
                             placeholderTextColor="white"
-                            secureTextEntry={true}
+                            secureTextEntry={false}
                             autoCorrect={false}
                             returnKeyType="next"
                         />
@@ -137,7 +140,7 @@ export default class Register extends React.Component{
                             placeholder="CONFIRM PASSWORD"
                             //color="white"
                             placeholderTextColor="white"
-                            secureTextEntry={true}
+                            secureTextEntry={false}
                             autoCorrect={false}
                             returnKeyType="go"
                         />
