@@ -70,57 +70,56 @@ export default class Authentication extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <ViewContainer>
-                <ViewContainer>
-                    <View style={styles.textInputView}>
-                        <TextInput style = {styles.textInput} 
-                            onChangeText={(text) => this.setState({email: text})}
-                            value={this.state.email}
-                            placeholder="EMAIL"
-                            color="white"
-                            placeholderTextColor="white"
-                            autoCorrect={false}
-                            returnKeyType="next"                        
-                        />
-                    </View>
-                    <View style={styles.textInputView}>
-                        <TextInput style = {styles.textInput}
-                            onChangeText={(text) => this.setState({password: text})}
-                            value={this.state.password}
-                            placeholder="PASSWORD"
-                            color="white"
-                            placeholderTextColor="white"
-                            secureTextEntry={true}
-                            autoCorrect={false}
-                            returnKeyType="go"
-                        />
-                    </View>
-                    <View style={styles.login}>
-                        <TouchableOpacity style={styles.loginButton} 
-                            onPress={ this._login.bind(this) }>
-                            <Text style={styles.loginText}>LOG IN</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.register}>
-                        <TouchableOpacity style={styles.registerButton} 
-                            onPress={ () =>
-                                navigate('Register',{ name: 'Register'})
-                                }>
-                            <Text style={styles.registerText}>REGISTER</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.register}>
-                        <TouchableOpacity style={styles.registerButton} 
-                            onPress={ () =>
-                                // View arguement is page to navigate to, second are parameters for that navigation
-                                navigate('ViewUsers',{ name: 'ViewUsers'})
-                                }>
-                            <Text style={styles.registerText}>VIEW USERS</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ViewContainer>
-                <View style={styles.logoReg}>
-                    <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
+                <View style={styles.textInputView}>
+                    <TextInput style = {styles.textInput} 
+                        onChangeText={(text) => this.setState({email: text})}
+                        value={this.state.email}
+                        placeholder="EMAIL"
+                        //color="white"
+                        placeholderTextColor="white"
+                        autoCorrect={false}
+                        returnKeyType="next"                        
+                    />
                 </View>
+                <View style={styles.textInputView}>
+                    <TextInput style = {styles.textInput}
+                        onChangeText={(text) => this.setState({password: text})}
+                        value={this.state.password}
+                        placeholder="PASSWORD"
+                        //color="white"
+                        placeholderTextColor="white"
+                        secureTextEntry={true}
+                        autoCorrect={false}
+                        returnKeyType="go"
+                    />
+                </View>
+                <View style={styles.login}>
+                    <TouchableOpacity style={styles.loginButton} 
+                        onPress={ this._login.bind(this) }>
+                        <Text style={styles.loginText}>LOG IN</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.register}>
+                    <TouchableOpacity style={styles.registerButton} 
+                        onPress={ () =>
+                            navigate('Register',{ name: 'Register'})
+                            }>
+                        <Text style={styles.registerText}>REGISTER</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.register}>
+                    <TouchableOpacity style={styles.registerButton} 
+                        onPress={ () =>
+                            // View argument is page to navigate to, second are parameters for that navigation
+                            navigate('ViewUsers',{ name: 'ViewUsers'})
+                            }>
+                        <Text style={styles.registerText}>VIEW USERS</Text>
+                    </TouchableOpacity>
+                </View>
+            
+            <View style={styles.logoReg}>
+                <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
+            </View>
             </ViewContainer>
         )
     }
@@ -129,7 +128,7 @@ export default class Authentication extends React.Component {
 const styles = StyleSheet.create({
     logo:{
         height: 200,
-        width:200,
+        width: 200,
         alignSelf: 'center'
     },
     logoReg: {

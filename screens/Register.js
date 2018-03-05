@@ -90,7 +90,7 @@ export default class Register extends React.Component{
                                 onChangeText={(text) => this.setState({firstName: text})}
                                 value={this.state.firstName}
                                 placeholder="FIRST NAME"
-                                color="white"
+                                //color="white"
                                 placeholderTextColor="white"
                                 autoCorrect={false}
                                 returnKeyType="next"                        
@@ -101,7 +101,7 @@ export default class Register extends React.Component{
                             onChangeText={(text) => this.setState({lastName: text})}
                             value={this.state.lastName}
                             placeholder="LAST NAME"
-                            color="white"
+                            //color="white"
                             placeholderTextColor="white"
                             autoCorrect={false}
                             returnKeyType="next"                        
@@ -112,7 +112,7 @@ export default class Register extends React.Component{
                             onChangeText={(text) => this.setState({email: text})}
                             value={this.state.email}
                             placeholder="EMAIL"
-                            color="white"
+                            //color="white"
                             placeholderTextColor="white"
                             autoCorrect={false}
                             returnKeyType="next"                        
@@ -123,7 +123,7 @@ export default class Register extends React.Component{
                             onChangeText={(text) => this.setState({password: text})}
                             value={this.state.password}
                             placeholder="PASSWORD"
-                            color="white"
+                            //color="white"
                             placeholderTextColor="white"
                             secureTextEntry={true}
                             autoCorrect={false}
@@ -135,7 +135,7 @@ export default class Register extends React.Component{
                             onChangeText={(text) => this.setState({confirmPassword: text})}
                             value={this.state.confirmPassword}
                             placeholder="CONFIRM PASSWORD"
-                            color="white"
+                            //color="white"
                             placeholderTextColor="white"
                             secureTextEntry={true}
                             autoCorrect={false}
@@ -148,10 +148,10 @@ export default class Register extends React.Component{
                             SUBMIT</Text>
                         </TouchableOpacity>
                     </View>
-                </ViewContainer>
-                <View style={styles.joinReg}>
+                    <View style={styles.joinReg}>
                     <Image source={require('../assets/images/join.jpg')} style={styles.join}/>
                 </View>
+                </ViewContainer>
             </ViewContainer>
         )
     }
