@@ -6,6 +6,7 @@ const db = SQLite.openDatabase('loc_db.db');
 
 // Class that holds a list of items pulled from db. Currently set up for users. Need to take time to implement generic class for this
 class Items extends React.Component {
+  
   constructor(props){
       super(props)
       
@@ -25,7 +26,8 @@ class Items extends React.Component {
     }
   
 
-  componentDidMount() {
+  
+    componentDidMount() {
     db.transaction(
         tx => {
           tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
@@ -94,19 +96,17 @@ export default class ViewUsers extends React.Component {
   }
 
   _flush(){
-    console.log("FLUSHING DB");
+    console.log("FLUSHING USERS DB");
 
     db.transaction(
       tx => {
         tx.executeSql(
-          'drop table if exists users;'
+          'drop table users;'
         );
         tx.executeSql(
           'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
         );
-      },
-      null,
-      this.update
+      }
     );
   }
 

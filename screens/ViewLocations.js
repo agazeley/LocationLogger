@@ -22,8 +22,7 @@ class Items extends React.Component {
         null,
         this.update
       );
-    }
-  
+    }  
 
   componentDidMount() {
     db.transaction(
@@ -31,11 +30,8 @@ class Items extends React.Component {
           tx.executeSql('select * from locations', [], (_, { rows: { _array } }) => 
           this.setState({ items: _array })
           );
-        },
-        null,
-        this.update
+        }
       );
-      console.log(this.state.items);
   }
 
   render() {
@@ -47,8 +43,9 @@ class Items extends React.Component {
     return (
       
       <View style={{ margin: 5 }}>
-        {items.map(({userID,lat, long}) => (
+        {items.map(({id,userID,lat, long}) => (
           <TouchableOpacity
+            key={id}
             style={{
               padding: 5,
               backgroundColor: 'white',
@@ -78,10 +75,25 @@ export default class ViewLocations extends React.Component {
     title : "View Locations",
   }
 
+  _flush(){
+    console.log("FLUSHING LOCATIONS DB");
+
+    db.transaction(
+      tx => {
+        tx.executeSql(
+          'drop table locations;'
+        );
+        tx.executeSql(
+          'create table if not exists locations (userID int , lat real not null, long real not null);'
+        );
+      }
+    );
+  }
+
   componentDidMount() {
     db.transaction(tx => {
         tx.executeSql(
-          'create table if not exists locations (id integer primary key not null autoincrement, userID int, lat real, long real);'
+          'create table if not exists locations (userID int, lat real, long real);'
         );
     });
 }
@@ -93,26 +105,16 @@ export default class ViewLocations extends React.Component {
     };
   }
 
-  _flush(){
-    console.log("FLUSHING DB");
-
-    db.transaction(
-      tx => {
-        tx.executeSql(
-          'drop table if exists locations;'
-        );
-        tx.executeSql(
-            'create table if not exists locations (id integer primary key not null autoincrement, userID int, lat real, long real);'
-        );
-      },
-      null,
-      this.update
-    );
-  }
 
   render() {
     return (
       <ViewContainer style={styles.container}>
+        <View style={styles.flush}>
+          <TouchableOpacity style={styles.flushButton} 
+            onPress={ this._flush.bind(this) }>
+            <Text style={styles.flushText}>FLUSH</Text>
+          </TouchableOpacity>
+        </View>
         <View style={{ flex: 1, backgroundColor: 'gray' }}>
           <Items/>
         </View>

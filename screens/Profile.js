@@ -18,7 +18,6 @@ export default class Profile extends React.Component{
             lastPosition: 'unknown',
             lat: 1,
             long: 0,
-            locs: null,
            }
     }
 
@@ -48,10 +47,8 @@ export default class Profile extends React.Component{
         Database.transaction(
             tx => {
               tx.executeSql('insert into locations (userID, lat, long) values (?, ?, ?);', [id,lat, long]);
-              tx.executeSql('select * from locations;', [], (_, { rows: { _array } }) => this.setState({ locs: _array }));
             }
         );
-        console.log(this.state.locs);
     }
 
     render() {

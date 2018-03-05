@@ -12,7 +12,7 @@ export default class Register extends React.Component{
     static navigationOptions = {
         //title: 'Register',
     }
-
+    
     componentDidMount(){
         Database.transaction(
             tx => {
