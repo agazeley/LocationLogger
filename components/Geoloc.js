@@ -33,10 +33,15 @@ export default class Geoloc extends Component {
       longitude: location.coords.longitude,
       location: location,
      });
+     this.setCoords();
   };
 
+  setCoords = () => {
+    this.props.setCoords(this.state.latitude, this.state.longitude);
+  }
+
   render() {
-    console.log('coords: ' + this.state.latitude +', '+ this.state.longitude);
+    //console.log('coords: ' + this.state.latitude +', '+ this.state.longitude);
     return (
       <View style={styles.container}>
         <Text style={styles.coords}>Latitude: {this.state.latitude}</Text>

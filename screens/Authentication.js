@@ -69,6 +69,14 @@ export default class Authentication extends React.Component {
         }
     }
    
+    setCoords = (lat, long) => {
+        this.setState({
+            latitude: lat,
+            longitude: long,
+        });
+
+    }
+
     render(){
         const { navigate } = this.props.navigation;
         return (
@@ -120,7 +128,8 @@ export default class Authentication extends React.Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.coordinates}>
-                    <Geoloc />
+                    <Geoloc setCoords={this.setCoords}></Geoloc>
+                    <Text style={styles.coordText}>Auth lat:{this.state.latitude}, long:{this.state.longitude}</Text>
                 </View>
                 <View style={styles.logoReg}>
                 <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
@@ -135,6 +144,13 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: 'black',
     },
+    coordText: {
+        backgroundColor: 'black',
+        color: 'white',
+        margin: 0,
+        fontSize: 12,
+        textAlign: 'center',
+      },
     logo:{
         height: 200,
         width: 200,
