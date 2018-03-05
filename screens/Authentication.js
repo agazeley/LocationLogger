@@ -16,8 +16,6 @@ export default class Authentication extends React.Component {
       _checkAuthenticated(_array){
         const { navigate } = this.props.navigation;
         
-        console.log(_array.length);
-        
         if(_array.length == '1'){
             this.setState({authenticated : true});
         }
@@ -50,8 +48,8 @@ export default class Authentication extends React.Component {
             'create table if not exists users (id integer primary key not null autoincrement, fName text, lName text, password text, email text);'
           );
           tx.executeSql('select * from users', [], (_, { rows: { _array } }) => 
-          this.setState({ users: _array })
-              );
+            this.setState({ users: _array })
+          );
         });
 
     }
@@ -67,14 +65,6 @@ export default class Authentication extends React.Component {
             latitude: 1,
             longitude: 0
         }
-    }
-   
-    setCoords = (lat, long) => {
-        this.setState({
-            latitude: lat,
-            longitude: long,
-        });
-
     }
 
     render(){
@@ -126,10 +116,6 @@ export default class Authentication extends React.Component {
                             }>
                         <Text style={styles.registerText}>VIEW USERS</Text>
                     </TouchableOpacity>
-                </View>
-                <View style={styles.coordinates}>
-                    <Geoloc setCoords={this.setCoords}></Geoloc>
-                    <Text style={styles.coordText}>Auth lat:{this.state.latitude}, long:{this.state.longitude}</Text>
                 </View>
                 <View style={styles.logoReg}>
                 <Image source={require('../assets/images/logo.png')} style={styles.logo}/>

@@ -29,7 +29,8 @@ export default class Register extends React.Component{
     }
 
     _add(fName,lName,email,password){
-        //console.log(fName + lName + email)
+        const { navigate } = this.props.navigation;
+
         Database.transaction(
             tx => {
               tx.executeSql('insert into users (fName, lName, password, email) values (?, ?, ?, ?)', [fName,lName,password,email]);
@@ -40,7 +41,7 @@ export default class Register extends React.Component{
             null,
             this.update
           );
-          console.log(JSON.stringify(this.state.users));
+          navigate('Login',{ });
     }
 
     _submit(){
@@ -70,7 +71,6 @@ export default class Register extends React.Component{
         this.done && this.done.update();
     }
 
-    
     constructor(props){
         super(props)
         this.state = {

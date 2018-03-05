@@ -4,6 +4,7 @@ import Login from '../screens/Authentication';
 import Register from '../screens/Register';
 import Profile from '../screens/Profile';
 import ViewUsers from '../screens/ViewUsers';
+import ViewLocations from '../screens/ViewLocations';
 
 const RootStackNavigator = StackNavigator(
     {
@@ -19,6 +20,9 @@ const RootStackNavigator = StackNavigator(
         ViewUsers: {
             screen : ViewUsers
         },
+        ViewLocations: {
+            screen : ViewLocations
+        }
     },
     {
         navigationOptions: () => ({
