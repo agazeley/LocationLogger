@@ -2,7 +2,7 @@ import Expo, { SQLite } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import ViewContainer from '../components/ViewContainer';
-const db = SQLite.openDatabase('loc_db.db');
+
 
 // Class that holds a list of items pulled from db. Currently set up for locations. Need to take time to implement generic class for this
 class Items extends React.Component {
@@ -13,25 +13,10 @@ class Items extends React.Component {
         items: null,
       };
       
-      db.transaction(
-        tx => {
-          tx.executeSql('select * from locations', [], (_, { rows: { _array } }) => 
-          this.setState({ items: _array })
-          );
-        },
-        null,
-        this.update
-      );
     }  
 
   componentDidMount() {
-    db.transaction(
-        tx => {
-          tx.executeSql('select * from locations', [], (_, { rows: { _array } }) => 
-          this.setState({ items: _array })
-          );
-        }
-      );
+    
   }
 
   render() {
@@ -60,13 +45,6 @@ class Items extends React.Component {
   }
 
   update() {
-    db.transaction(tx => {
-      tx.executeSql(`select * from locations;`,
-        (_, { rows: { _array } }) => 
-        this.setState({ items: _array })
-      );
-      
-    });
   }
 }
 
@@ -76,27 +54,11 @@ export default class ViewLocations extends React.Component {
   }
 
   _flush(){
-    console.log("FLUSHING LOCATIONS DB");
-
-    db.transaction(
-      tx => {
-        tx.executeSql(
-          'drop table locations;'
-        );
-        tx.executeSql(
-          'create table if not exists locations (userID int , lat real not null, long real not null);'
-        );
-      }
-    );
   }
 
   componentDidMount() {
-    db.transaction(tx => {
-        tx.executeSql(
-          'create table if not exists locations (userID int, lat real, long real);'
-        );
-    });
-}
+  }
+  
   constructor(props){
     super(props)
     

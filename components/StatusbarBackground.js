@@ -12,6 +12,6 @@ export default class StatusbarBackground extends React.Component{
 
 const styles = StyleSheet.create({
     statusbarBackground: {
-        height: 20
+        height: 20,
     }
 })

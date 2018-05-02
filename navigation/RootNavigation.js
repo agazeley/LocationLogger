@@ -3,8 +3,13 @@ import { StackNavigator } from 'react-navigation';
 import Login from '../screens/Authentication';
 import Register from '../screens/Register';
 import Profile from '../screens/Profile';
-import ViewUsers from '../screens/ViewUsers';
+import LogOut from '../components/LogOut';
+import Menu from '../screens/Menu';
 import ViewLocations from '../screens/ViewLocations';
+import Customize from '../screens/Customize';
+import Subs from '../screens/Subs';
+import TabNavigation from '../navigation/TabNavigation';
+import {View, Text} from 'react-native';
 
 const RootStackNavigator = StackNavigator(
     {
@@ -14,14 +19,23 @@ const RootStackNavigator = StackNavigator(
         Register: {
             screen: Register
         },
-        Profile: {
-            screen: Profile
+        Menu : {
+            screen : TabNavigation,
+            navigationOptions: ({navigation}) => ({
+                headerLeft: <LogOut nav={navigation}/>
+            })
         },
-        ViewUsers: {
-            screen : ViewUsers
+        Subs : {
+            screen : Subs,
+            navigationOptions : ({navigation}) => ({
+                title : 'SUBS',
+            })
         },
-        ViewLocations: {
-            screen : ViewLocations
+        Customize : {
+            screen : Customize,
+            navigationOptions : ({navigation}) => ({
+                title: 'Add Item'
+            })
         }
     },
     {
